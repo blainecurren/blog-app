@@ -14,6 +14,10 @@ const Register = () => {
 
   console.log(inputs);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="auth">
       <h1>Register</h1>
@@ -39,7 +43,7 @@ const Register = () => {
           name="password"
           onChange={handleChange}
         />
-        <button>Register</button>
+        <button onClick={handleSubmit}>Register</button>
         <p>Error!</p>
         <span>
           Do you have an account? <Link to="/login">Login</Link>
