@@ -49,7 +49,7 @@ export const login = (req, res) => {
         httpOnly: true,
       })
       .status(200)
-      .json(data[0]);
+      .json(other);
   });
 };
 
