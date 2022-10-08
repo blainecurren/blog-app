@@ -1,5 +1,5 @@
 export const getPosts = (req, res) => {
-  res.json("from controller");
+  const q = 
 };
 export const getPost = (req, res) => {
   res.json("from controller");
