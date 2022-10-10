@@ -30,6 +30,15 @@ const Single = () => {
     fetchData();
   }, [postId]);
 
+  const handleDelete = async () => {
+    try {
+      const res = await axios.delete(`/posts/${postId}`);
+      setPosts(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="single">
       <div className="content">
@@ -45,7 +54,7 @@ const Single = () => {
               <Link to={`/write?edit=2`}>
                 <img src={Edit} alt="" />
               </Link>
-              <img src={Delete} alt="" />
+              <img onClick={handleDelete} src={Delete} alt="" />
             </div>
           )}
         </div>
