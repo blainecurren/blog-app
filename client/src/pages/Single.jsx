@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Edit from "../img/edit.png";
 import Delete from "../img/delete.png";
@@ -6,13 +6,17 @@ import Menu from "../components/Menu";
 import { useState } from "react";
 import axios from "axios";
 import moment from "moment";
+import { useContext } from "react";
+import { AuthContext } from "../context/authContext";
 
 const Single = () => {
-  const [posts, setPosts] = useState([]);
+  const [post, setPosts] = useState([]);
 
   const location = useLocation();
 
   const postId = location.pathname.split("/")[2];
+
+  const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,27 +38,19 @@ const Single = () => {
           <img src="" alt="" />
           <div className="info">
             <span>{post.username}</span>
-            <p>{moment(post.date).fromNow()}</p>
+            <p>Posted {moment(post.date).fromNow()}</p>
           </div>
-          <div className="edit">
-            <Link to={`/write?edit=2`}>
-              <img src={Edit} alt="" />
-            </Link>
-            <img src={Delete} alt="" />
-          </div>
+          {currentUser.username === post.username && (
+            <div className="edit">
+              <Link to={`/write?edit=2`}>
+                <img src={Edit} alt="" />
+              </Link>
+              <img src={Delete} alt="" />
+            </div>
+          )}
         </div>
-        <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h1>
-        <p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-        </p>
+        <h1>{post.title}</h1>
+        <p>{post.desc}</p>
         <Menu />
       </div>
     </div>
