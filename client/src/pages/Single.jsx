@@ -1,19 +1,40 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import Edit from "../img/edit.png";
 import Delete from "../img/delete.png";
 import Menu from "../components/Menu";
+import { useState } from "react";
+import axios from "axios";
+import moment from "moment";
 
 const Single = () => {
+  const [posts, setPosts] = useState([]);
+
+  const location = useLocation();
+
+  const postId = location.pathname.split("/")[2];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`/posts${postId}`);
+        setPosts(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, [postId]);
+
   return (
     <div className="single">
       <div className="content">
-        <img src="" alt="" />
+        <img src={post?.img} alt="" />
         <div className="user">
           <img src="" alt="" />
           <div className="info">
-            <span>John</span>
-            <p>Posted 2 days ago</p>
+            <span>{post.username}</span>
+            <p>{moment(post.date).fromNow()}</p>
           </div>
           <div className="edit">
             <Link to={`/write?edit=2`}>
